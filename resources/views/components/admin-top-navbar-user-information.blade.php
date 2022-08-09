@@ -1,11 +1,11 @@
 <li class="nav-item dropdown no-arrow">
     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-        @if(Auth::check())
+        @if(@Auth::check())
             {{auth()->user()->name}}
         @endif
-      </span>
-      <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+    </span>
+      <img class="img-profile rounded-circle" src="{{asset("storage/".auth()->user()->avatar)}}">
     </a>
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -29,7 +29,7 @@
     </div>
   </li>
 
-  <!-- Logout Modal-->
+{{-- logout --}}
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -41,6 +41,7 @@
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <form action="/logout" method="post">
                 @csrf
                 <button class="btn btn-danger">Logout</button>

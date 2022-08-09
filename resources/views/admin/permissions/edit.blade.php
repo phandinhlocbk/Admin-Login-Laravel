@@ -1,15 +1,14 @@
 <x-admin-master>
     @section('content')
-    @if(session()->has('role-updated'))
+    @if(session()->has('permission-updated'))
     <div class="alert alert-success">
-        {{session('role-updated')}}
+        {{session('permission-updated')}}
     </div>
-
     @endif
     <div class="row">
       <div class="col-sm-6">
         <h1>edit role: {{$permission->name}}</h1>
-        <form method="post" action="{{route('permission.update',$permission->id)}} ">
+        <form method="post" action="{{route('permissions.update',$permission->id)}} ">
             @csrf
             @method('PUT')
             <div class="form-group">

@@ -8,13 +8,14 @@ use App\Models\User;
 
 class Post extends Model
 {
-    use HasFactory;
-    protected $guard = [];
-    protected $fillable = [
-        'title',
-        'body',
-    ];
+    protected $guarded = [];
+
     public function user() {
         return $this->belongsTo(User::class);
+    }
+    
+
+    public function getPostImageAttribute($value) {
+        return asset('storage/'.$value);
     }
 }

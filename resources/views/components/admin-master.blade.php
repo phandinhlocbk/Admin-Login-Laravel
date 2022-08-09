@@ -41,7 +41,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.index')}}">
+        <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -49,23 +49,23 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
+
       <!-- Heading -->
       <div class="sidebar-heading">
         Interface
       </div>
 
+
       <!-- Nav Item - Pages Collapse Menu -->
-      <x-admin.sidebar.admin-sidebar-posts-links></x-admin.sidebar.admin-sidebar-posts-links>
-
-      {{-- @if(auth()->user()->userHasRole('Admin2')) --}}
-      <x-admin.sidebar.admin-sidebar-users-links></x-admin.sidebar.admin-sidebar-users-links>
-      {{-- @endif --}}
-
-      <x-admin.sidebar.authorizations-links></x-admin.sidebar.authorizations-links>
+      <x-admin-sidebar-posts-links></x-admin-sidebar-posts-links>
       
+      @if(auth()->user()->userHasRole('Admin'))
+      <x-admin-sidebar-users-links></x-admin-sidebar-users-links>
+      <x-authorization-links></x-authorization-links>
+      @endif
 
+    
 
-     
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -293,7 +293,7 @@
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
-            <x-admin.topnav.admin-top-navbar-user-information></x-admin.topnav.admin-top-navbar-user-information>
+           <x-admin-top-navbar-user-information></x-admin-top-navbar-user-information>
 
           </ul>
 
@@ -302,12 +302,8 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
-          <!-- Page Heading -->
-
           @yield('content')
-         
-
+          
         </div>
         <!-- /.container-fluid -->
 
@@ -335,6 +331,7 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
+  <!-- Logout Modal-->
   
 
   <!-- Bootstrap core JavaScript-->
@@ -345,9 +342,7 @@
   <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="{{asset('js/sb-admin-2.min.js"')}}></script>
-
-  @yield('scripts')
+  <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 </body>
 

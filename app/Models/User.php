@@ -8,7 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Post;
-use Illuminate\Support\Str;
+use App\Models\Permission;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
     ];
 
     /**
@@ -45,28 +47,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function setPasswordAttribute($value) {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
     public function posts() {
         return $this->hasMany(Post::class);
-    }
-
-    public function roles() {
-        return $this->belongsToMany(Role::class);
     }
 
     public function permissions() {
         return $this->belongsToMany(Permission::class);
     }
 
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function setPassWordAttribute($value) {
+        return $this->attributes['password'] = bcrypt($value);
+    }
+
+    // public function getavatarAttribute($value) {
+    //     return asset($value);
+    // }
+
     public function userHasRole($role_name) {
+        
         foreach($this->roles as $role) {
-            if(Str::lower($role_name) == Str::lower($role->name))
+            if($role_name == $role->name)
             return true;
         }
-
         return false;
     }
+
 }

@@ -30,16 +30,20 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
-        if ($user->userHasRole('admin')) {
+        return $user->userHasRole('admin') ?:$user->id == $model->id;
+        //$user->id == $model->id;
+
+        if($user->userHasRole('admin')) {
             return true;
         }
-        if ($user->userHasRole('moderator')) {
+        if($user->userHasRole('moderator')) {
             return true;
         }
-        if ($user->userHasRole('manager')) {
+        if($user->userHasRole('manager')) {
             return true;
         }
-      
+       
+
     }
 
     /**

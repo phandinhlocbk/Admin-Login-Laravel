@@ -14,14 +14,12 @@ class RoleMiddleWare
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role )
+    public function handle(Request $request, Closure $next, $role)
     {
-        if (!$request->user()->userHasrole($role)){
-            abort(403, 'You are not authorized');
 
+        if(!$request->user()->userHasRole($role)) {
+                abort(403, 'you are not authorizaed');
         }
         return $next($request);
     }
-
-
 }

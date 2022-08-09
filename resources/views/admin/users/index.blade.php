@@ -41,16 +41,17 @@
                         <td> {{$user->id}}</td>
                         <td><a href="{{route('user.profile.show', $user->id)}}">{{$user->username}}</a></td>
                         <td>
-                           <img height="50px" src="{{$user->avarta}}" alt="">
+                           <img height="50px" src="{{asset("storage/".$user->avatar)}}" alt="">
                         </td>
                         <td> {{$user->name}}</td>
                         <td> {{$user->created_at->diffForhumans()}}</td>
                         <td> {{$user->updated_at->diffForhumans()}}</td>
                         <td>
-                            <form method="post" action="{{route('user.destroy',$user->id)}}">
+                            <form method="POST" action="{{route('user.destroy', $user->id)}}">
                               @csrf
                               @method('DELETE')
                               <button class="btn btn-danger">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

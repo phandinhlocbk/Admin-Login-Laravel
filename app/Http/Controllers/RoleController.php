@@ -7,70 +7,64 @@ use Illuminate\Support\Str;
 use App\Models\Role;
 use App\Models\Permission;
 
-
-class RolesController extends Controller
+class RoleController extends Controller
 {
     //
-
     public function index() {
         $roles = Role::all();
-       
         return view('admin.roles.index', ['roles'=>$roles]);
     }
 
-    public function store() {
-        request() -> validate([
-            'name'=>['required']
-        ]);
+    public function store(Request  $request){
 
+        request()->validate([
+            'name' => ['required']
+        ]);
         Role::create([
-            'name'=>Str::ucfirst(request('name')),
-            'slug'=>Str::ucfirst(request('name'))
+            'name' => Str::ucfirst(request('name')),
+            'slug' => Str::of(Str::lower(request('name')))->slug('-')
         ]);
-
-        session()->flash('role-created', 'Created-role');
 
         return back();
-
     }
 
     public function destroy(Role $role) {
         $role->delete();
 
-        session()->flash('deleted-role','role has been deleted '.$role['name']);
+        session()->flash('role-deleted', 'Deleted Role'.$role->name);
+
         return back();
     }
 
     public function edit(Role $role) {
-        return view('admin.roles.edit',[
+        return view('admin.roles.edit', [
             'role'=>$role,
-            'permissions'=> Permission::all(),
-    ]);
+            'permission'=>Permission::all() 
+        ]);
     }
 
-    public function update(Role $role) {
-
+    public function update(Role $role) {       
         $role->name = Str::ucfirst(request('name'));
-        $role->slug = Str::of(request('name'))->slug('-');
+        $role->slug = Str::of(Str::lower(request('name')))->slug('-');
 
         if($role->isDirty('name')){
-            session()->flash('role-updated','Role Update '.request('name'));
+            session()->flash('role-updated', 'Role Update'.request('name'));
             $role->save();
-
         } else {
-            session()->flash('role-updated', 'Nothing has been updated');
+            session()->flash('role-updated', 'Nothing has been udated');
         }
-
         return back();
     }
 
     public function attach_permission(Role $role) {
-        $role->permissions()->attach(request('permission'));
-        return back();
+            $role->permissions()->attach(request('permission'));
+            return back();
+
     }
 
     public function detach_permission(Role $role) {
         $role->permissions()->detach(request('permission'));
         return back();
+
     }
 }

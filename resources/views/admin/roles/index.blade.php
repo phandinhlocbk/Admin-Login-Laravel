@@ -1,42 +1,36 @@
 <x-admin-master>
     @section('content')
-       <div class="row">
-        @if(session()->has('role-created'))
-            <div class="alert alert-success">
-                {{session('role-created')}}
-            </div>
-        @elseif(session()->has('deleted-role'))
+        @if(session()->has('role-deleted'))
             <div class="alert alert-danger">
-                {{session('deleted-role')}}
+                {{session('role-deleted')}}
             </div>
         @endif
+       <div class="row">
+           <div class="col-sm-3">
+               <form method="post" action="{{route('roles.store')}}">
+                  @csrf
+                  <div class="form-group">
+                        <label for="name">Name</label>
+                        <input 
+                        type="text" 
+                        name="name" 
+                        id="name"
+                        class="form-control @error('name') is-invalid @enderror">
 
-       <div class="col-sm-3">
-           <form method="post" action="{{route('roles.store')}}">
-              @csrf
-              <div class="form-group">
-                    <label for="name">Name</label>
-                    <input 
-                    type="text" 
-                    name="name" 
-                    id="name"
-                    class="form-control @error('name') is-invalid @enderror">
-
-                    <div>
-                        @error('name')
-                            <span><strong>{{$message}}</span>
-                        @enderror
-                    </div>
-              </div>
-              <button class="btn btn-primary bttn-block" type="submit" >Create</button>
-            </form>
-        </div>
-
-         <!-- DataTales Example -->
+                        <div>
+                            @error('name')
+                                <span><strong>{{$message}}</span>
+                            @enderror
+                        </div>
+                  </div>
+                  <button class="btn btn-primary bttn-block" type="submit" >Create</button>
+                </form>
+            </div>
+                     <!-- DataTales Example -->
             <div class="col-sm-9">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Roles tables</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div>
                         <div class="card-body">
                         <div class="table-responsive">
@@ -60,11 +54,12 @@
                             <tbody>
                             @foreach($roles as $role)
                             <tr>
+                              
                                 <td>{{$role->id}}</td>
                                 <td><a href="{{route('roles.edit', $role->id)}}">{{$role->name}}</a></td>
                                 <td>{{$role->slug}}</td>
                                 <td>
-                                    <form method="post" action="{{route('roles.destroy', $role->id)}}">
+                                    <form method="post" action="{{route('roles.destroy', $role->id)}}"> 
                                         @csrf
                                         @method("Delete")
                                         <button type="submit" class="btn btn-danger">Delete

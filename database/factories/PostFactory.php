@@ -15,10 +15,11 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'=>User::factory('App\Models\User'),
-            'title' =>$this->faker->sentence(),
+            //
+            'user_id' => User::factory('App\Models\User'),
+            'title' => $this->faker->sentence(),
             'post_image'=>$this->faker->imageUrl('900','300'),
-            'body'=>$this->faker->paragraph(),
+            'body'=>$this->faker->paragraph(),      
         ];
     }
 }

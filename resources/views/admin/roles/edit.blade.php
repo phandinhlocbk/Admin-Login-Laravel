@@ -1,9 +1,10 @@
 <x-admin-master>
     @section('content')
-    @if(session()->has('role-deleted'))
-    <div class="alert alert-danger">
-        {{session('role-deleted')}}
+    @if(session()->has('role-updated'))
+    <div class="alert alert-success">
+        {{session('role-updated')}}
     </div>
+    @endif
 
     @endif
     <div class="row">
@@ -14,20 +15,16 @@
             @method('PUT')
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" 
-                name="name" 
-                class="form-control"
-                id="name" 
-                value="{{$role->name}}">
+                <input type="text" name="name" class="form-control" id="name" value="{{$role->name}}">
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button class="btn btn-primary">Update</button>
         </form>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12">
-      @if($permissions->isNotEmpty())
+      @if($permission->isNotEmpty())
       <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Permissions</h6>
@@ -56,7 +53,7 @@
                 </tr>
               </tfoot>
               <tbody>
-                @foreach($permissions as $permission)
+                @foreach($permission as $permission)
                 <tr>
                   <td><input type="checkbox"
                     @foreach($role->permissions as $role_permission)
@@ -69,7 +66,7 @@
                   <td>{{$permission->name}}</td>
                   <td>{{$permission->slug}}</td>
                   <td>
-                      <form method='post' action="{{route('roles.permission.attach', $role)}}">
+                      <form method='post' action="{{route('user.roles.attach', $role)}}">
                           @method('PUT')
                           @csrf
                           <input type="hidden" name="permission" value="{{$permission->id}}">
@@ -88,7 +85,7 @@
                       </form>
                   </td>
                   <td>
-                    <form method='post' action="{{route('roles.permission.detach', $role)}}">
+                    <form method='post' action="{{route('user.roles.detach', $role)}}">
                         @method('PUT')
                         @csrf
                         <input type="hidden" name="permission" value="{{$permission->id}}">
@@ -117,7 +114,7 @@
       
       
       </div>
-      @endif
+      {{-- @endif --}}
       </div>
     </div>
     @endsection

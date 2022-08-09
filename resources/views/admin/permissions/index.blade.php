@@ -1,34 +1,32 @@
 <x-admin-master>
     @section('content')
+    @if(session()->has('permission-deleted'))
+    <div class="alert alert-danger">
+        {{session('permission-deleted')}}
+    </div>
+    @endif
        <div class="row">
-        @if(session()->has('permission-deleted'))
-        <div class="alert alert-danger">    
-            {{session('permission-deleted')}}
-        </div>
-        @endif
-        {{-- insert permission --}}
-        <div class="col-sm-3">
-            <form method="post" action="{{route('permission.store')}}">
-               @csrf
-               <div class="form-group">
-                     <label for="name">Name</label>
-                     <input 
-                     type="text" 
-                     name="name" 
-                     id="name"
-                     class="form-control @error('name') is-invalid @enderror">
+           <div class="col-sm-3">
+               <form method="post" action="{{route('permissions.store')}}">
+                  @csrf
+                  <div class="form-group">
+                        <label for="name">Name</label>
+                        <input 
+                        type="text" 
+                        name="name" 
+                        id="name"
+                        class="form-control @error('name') is-invalid @enderror">
 
-                     <div>
-                         @error('name')
-                             <span><strong>{{$message}}</span>
-                         @enderror
-                     </div>
-               </div>
-               <button class="btn btn-primary bttn-block" type="submit" >Create</button>
-             </form>
-         </div>
-
-        <!-- DataTales Example -->
+                        <div>
+                            @error('name')
+                                <span><strong>{{$message}}</span>
+                            @enderror
+                        </div>
+                  </div>
+                  <button class="btn btn-primary bttn-block" type="submit" >Create</button>
+                </form>
+            </div>
+                     <!-- DataTales Example -->
             <div class="col-sm-9">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -57,10 +55,10 @@
                             @foreach($permissions as $permission)
                             <tr>
                                 <td>{{$permission->id}}</td>
-                                <td><a href="{{route('permission.edit', $permission->id)}}">{{$permission->name}}</a></td>
+                                <td><a href="{{route('permissions.edit', $permission->id)}}">{{$permission->name}}</a></td>
                                 <td>{{$permission->slug}}</td>
                                 <td>
-                                    <form method="post" action="{{route('permission.destroy', $permission->id)}}">
+                                    <form method="post" action="{{route('permissions.destroy', $permission->id)}}">
                                         @csrf
                                         @method("Delete")
                                         <button type="submit" class="btn btn-danger">Delete

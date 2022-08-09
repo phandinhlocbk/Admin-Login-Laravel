@@ -1,12 +1,7 @@
 <x-admin-master>
     @section('content')
         <h1>Create</h1>
-        @if(session()->has('post-createdmessage'))
-        <div class="alert alert-success">
-            {{session('post-createdmessage')}}
-        </div>
-        @endif
-        <form method="post" action="{{route('posts.store')}}" enctype="multipart/form-group">
+        <form method="post" action="{{route('posts.store')}}"  enctype="multipart/form-data">
           @csrf
             <div class="form-group">
                 <label for="title">Title</label>
@@ -19,11 +14,13 @@
 
             </div>
             <div class="form-group">
-                <label for="file">File</label>
+                <label for="post_image">Files</label>
                 <input  type="file" 
                         name="post_image"
+                        id = "post_image"
                         class="form-control-file" 
-                        id="post_image" >
+                        >
+                @csrf
 
             </div>
 
